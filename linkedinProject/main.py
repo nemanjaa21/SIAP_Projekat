@@ -13,7 +13,7 @@ def print_hi(name):
     print(f'Hi, {name}')
 
 
-if _name_ == '_main_':
+if __name__ == '_main_':
     train, test = split_data(import_data())
     x_train, y_train, x_test, y_test = split_input_output(train, test)
 
