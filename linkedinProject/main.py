@@ -68,3 +68,25 @@ if __name__ == '_main_':
         epochs=5,
         batch_size=32,
     )
+
+    encoded_titles = [one_hot(d, num_words) for d in x_test['title']]
+    padded_titles = pad_sequences(encoded_titles, maxlen=6, padding='post')
+    encoded_description = [one_hot(d, num_words) for d in x_test['description'].astype(str)]
+    padded_description = pad_sequences(encoded_description, maxlen=6, padding='post')
+    encoded_locations = [one_hot(d, num_words) for d in x_test['location']]
+    padded_locations = pad_sequences(encoded_locations, maxlen=6, padding='post')
+    title_data = padded_titles
+    description_data = padded_description
+    location_data = padded_locations
+
+    print("Length of title_data:", len(padded_titles))
+    print("Length of description_data:", len(padded_description))
+    print("Length of location_data:", len(padded_locations))
+    print("Length of y_test:", len(y_test))
+
+    test_scores = model.evaluate([title_data, description_data, location_data], y_test, verbose=2)
+
+    print("Test loss:", test_scores[0])
+    print("Test accuracy:", test_scores[1])
+    print("Test sparse accuracy:", test_scores[2])
+    print_hi('PyCharm')
