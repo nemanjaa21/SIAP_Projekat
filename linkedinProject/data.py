@@ -7,8 +7,8 @@ def import_data():
     data = pd.read_csv('../dataset/archive/job_postings.csv', index_col=False)
     # subset the data
     rand_job_ids = np.random.choice(data['job_id'].unique(),
-                                     size=int(len(data['job_id'].unique()) * 0.01),
-                                     replace=False)
+                                    size=int(len(data['job_id'].unique()) * 0.01),
+                                    replace=False)
 
     data = data.loc[data['job_id'].isin(rand_job_ids)]
     print(data.shape[0])
