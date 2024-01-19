@@ -13,11 +13,11 @@ def print_hi(name):
     print(f'Hi, {name}')
 
 
-if __name__ == '_main_':
+if __name__ == '__main__':
     train, test = split_data(import_data())
     x_train, y_train, x_test, y_test = split_input_output(train, test)
 
-    num_locations = 5  # Number of unique issue tags
+    num_locations = 6  # Number of unique issue tags
     num_words = 10000  # Size of vocabulary obtained when preprocessing text data
     num_pop_levels = 4  # Number of departments for predictions
 
@@ -34,6 +34,7 @@ if __name__ == '_main_':
     x = layers.concatenate([title_features, description_features, location_input])
 
     popularity_pred = layers.Dense(1, name="views")(x)
+    print(popularity_pred)
 
     model = keras.Model(
         inputs=[title_input, description_input, location_input],
@@ -55,7 +56,7 @@ if __name__ == '_main_':
     encoded_description = [one_hot(d, num_words) for d in x_train['description'].astype(str)]
     padded_description = pad_sequences(encoded_description, maxlen=6, padding='post')
     encoded_location = [one_hot(d, num_words) for d in x_train['location']]
-    padded_locations = pad_sequences(encoded_location, maxlen=5, padding='post')
+    padded_locations = pad_sequences(encoded_location, maxlen=6, padding='post')
     title_data = padded_titles
     description_data = padded_description
     location_data = padded_locations

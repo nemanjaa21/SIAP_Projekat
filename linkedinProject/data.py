@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from keras.preprocessing.text import one_hot
+from keras.utils import pad_sequences
 
 
 def import_data():
@@ -7,14 +9,18 @@ def import_data():
     data = pd.read_csv('../dataset/archive/job_postings.csv', index_col=False)
     # subset the data
     rand_job_ids = np.random.choice(data['job_id'].unique(),
-                                    size=int(len(data['job_id'].unique()) * 0.01),
-                                    replace=False)
+                                     size=int(len(data['job_id'].unique()) * 0.01),
+                                     replace=False)
 
     data = data.loc[data['job_id'].isin(rand_job_ids)]
-    print(data.shape[0])
     data = data.drop_duplicates(subset='job_id', keep="first")
-    print(data.shape[0])
 
+    #Handle NaN values
+    data = data.fillna(value=0)
+    data['views'] = data['views'].fillna(value=0)  # Replace NaN in the 'views' column with 0
+    data['views'] = data['views'].where(data['views'] > 200000, 1)
+    data['views'] = data['views'].where(data['views'] < 200000, 0)
+    print(data)
     return data
 
 
