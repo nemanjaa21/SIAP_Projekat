@@ -10,7 +10,7 @@ from sklearn.preprocessing import LabelEncoder
 def import_data():
     np.random.seed(123)
     data = pd.read_csv('../dataset/archive/job_postings.csv', index_col=False)
-    #eda(data)
+    eda(data)
     # subset the data
     rand_job_ids = np.random.choice(data['job_id'].unique(),
                                      size=int(len(data['job_id'].unique()) * 0.01),
@@ -94,7 +94,6 @@ def preprocessing_data(data):
     # Handle NaN values
     data['views'] = data['views'].fillna(data['views'].median())
     data['applies'] = data['applies'].fillna(data['applies'].median())
-        # eksplorativna analiza podataka fali
 
     # Convert categorical variables to numerical values
     label_encoder = LabelEncoder()
